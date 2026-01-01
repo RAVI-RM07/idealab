@@ -16,6 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.classList.remove('active');
     }));
 
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+
     // Active Link Highlighting
     const currentLocation = location.href;
     const menuItem = document.querySelectorAll('.nav-link');

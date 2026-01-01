@@ -10,6 +10,8 @@
     --light-grey: #f4f4f4;
     --border-color: #ddd;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --nav-height: 80px;
+    /* Define nav height variable */
 }
 
 * {
@@ -219,6 +221,15 @@ footer {
     color: var(--white);
     margin-bottom: 20px;
     font-size: 1.2rem;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(4, min-content);
+    gap: 0 30px;
+    /* 30px gap between columns as requested */
 }
 
 .footer-links li {
@@ -439,6 +450,34 @@ footer {
 }
 
 /* =========================================
+   NEW: Text Content Block Styles
+   ========================================= */
+.text-content-block {
+    max-width: 800px;
+    /* Constrained width for readability */
+    margin: 0 auto;
+    /* Center align */
+    text-align: center;
+    /* Center text by default, can be overridden */
+    padding: 0 20px;
+    /* Mobile padding */
+}
+
+.text-content-block p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    /* Airy line height */
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 769px) {
+    .text-content-block p {
+        font-size: 1.15rem;
+    }
+}
+
+/* =========================================
    RESPONSIVE MEDIA QUERIES (COMPREHENSIVE)
    ========================================= */
 
@@ -491,44 +530,78 @@ footer {
     /* Navbar becomes Mobile Style */
     .hamburger {
         display: block;
+        position: relative;
+        z-index: 1005;
+        /* Ensure above side panel */
     }
 
     .nav-menu {
         position: fixed;
-        left: -100%;
-        top: 70px;
+        right: 0;
+        /* Align to right */
+        top: 0;
+        left: auto;
+        /* Reset left */
         gap: 0;
         flex-direction: column;
         background-color: var(--white);
-        width: 100%;
+        width: 75%;
+        /* 75% width */
+        max-width: 300px;
+        /* Max width constraint */
+        height: 100vh;
+        /* Full height */
         text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-        padding: 20px 0;
-        height: auto;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        /* Shadow to the left */
+        padding-top: 90px;
+        /* Space for top area */
+        transform: translateX(100%);
+        /* Start hidden to the right */
+        opacity: 1;
+        /* Always visible opacity-wise, just moved out */
+        z-index: 1001;
+        /* High z-index */
+        overflow-y: auto;
+        /* Vertical scroll if needed */
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
     }
 
     .nav-menu.active {
-        left: 0;
+        transform: translateX(0);
+        /* Slide in */
     }
 
     .nav-menu li {
         width: 100%;
         display: block;
         margin: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .nav-link {
         width: 100%;
         padding: 15px 0;
         display: block;
-        border-bottom: 1px solid #eee;
+        border-bottom: none;
+        color: var(--primary-color);
+        font-weight: 500;
     }
 
+    .nav-link:hover,
+    .nav-link.active {
+        background-color: #f9f9f9;
+        color: var(--secondary-color);
+    }
+
+    /* Fixed Contact Button at bottom of menu */
     .nav-menu .btn {
         margin: 20px auto;
         display: inline-block;
         width: 80%;
+        text-align: center;
     }
 
     /* Typography & Layout */
@@ -549,34 +622,7 @@ footer {
         gap: 20px;
     }
 
-    /* Governance Table Stacking */
-    .doc-table,
-    .doc-table tbody,
-    .doc-table tr,
-    .doc-table td {
-        display: block;
-        width: 100%;
-    }
 
-    .doc-table thead {
-        display: none;
-    }
-
-    .doc-table tr {
-        margin-bottom: 15px;
-        border: 2px solid #000;
-    }
-
-    .doc-table td {
-        text-align: center;
-        border: none;
-        border-bottom: 1px solid #eee;
-        padding-left: 15px;
-    }
-
-    .doc-table td:last-child {
-        border-bottom: none;
-    }
 }
 
 /* 5. Mobile Large (480px – 599px) */
@@ -661,28 +707,16 @@ footer {
 
     /* 4. Fix Team/Governance Table Overflow 
        Ensuring full width blocks regardless of HTML width attributes */
-    .doc-table,
-    .doc-table tbody,
-    .doc-table tr,
-    .doc-table td {
-        display: block !important;
-        width: 100% !important;
-        box-sizing: border-box;
-    }
 
-    .doc-table td {
-        padding-left: 0 !important;
-        padding: 15px !important;
-        text-align: center !important;
-    }
 
     /* 5. General Layout & Overflow Prevention */
     .container {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        padding-left: 15px !important;
+        /* Reduced from 20px */
+        padding-right: 15px !important;
+        /* Reduced from 20px */
         width: 100% !important;
         overflow-x: hidden;
-        /* Prevent horizontal scroll */
     }
 
     img {
@@ -695,5 +729,397 @@ footer {
     .page-header h1 {
         font-size: 2rem !important;
         line-height: 1.3 !important;
+    }
+
+    /* =========================================
+       FIX: Mobile Text Wrapping & Width Issues 
+       ========================================= */
+    p,
+    .text-content-block,
+    .text-content-block p,
+    .card p,
+    .section p {
+        width: 100% !important;
+        max-width: 100% !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Ensure flex children (like in Vision/About) take full width when stacked */
+    .card>div[style*="display: flex"]>div,
+    .section .container>div>div {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Reset margins for stacked text to avoid squashing */
+    .text-content-block {
+        padding: 0 !important;
+        /* Removed extra padding (was 10px) */
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+
+    /* Specific fix for lists (e.g. Mission) */
+    ul,
+    li {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    li span {
+        display: inline-block;
+        /* Allow text to flow */
+        width: auto !important;
+        flex: 1;
+        /* Take remaining space in flex row */
+    }
+}
+
+@media (max-width: 768px) {
+
+    .content,
+    .section-content,
+    .text-block,
+    .home-content {
+        width: 100%;
+        max-width: 100% !important;
+        /* Force full width */
+        margin: 0 auto;
+        padding: 0 !important;
+        /* Remove inner padding to fix empty space */
+    }
+
+    p {
+        text-align: left;
+        line-height: 1.65;
+        font-size: 15.5px;
+        padding: 0 !important;
+        /* Ensure no padding on p tags */
+    }
+}
+
+/* =========================================
+   FIX: About Lab Card Icons (Mobile Grid)
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* Transform Card into Grid for precise alignment */
+    .card {
+        display: grid !important;
+        grid-template-columns: min-content 1fr;
+        grid-template-rows: min-content auto;
+        column-gap: 10px;
+        /* Reduced from 20px */
+        align-items: center;
+        /* Vertically center icon & title */
+        text-align: left !important;
+    }
+
+    /* About/Services: Icon is direct child */
+    .card>i {
+        grid-row: 1;
+        grid-column: 1;
+        font-size: 1.8rem !important;
+        margin: 0 !important;
+        width: 40px;
+        text-align: center;
+    }
+
+    /* About/Services: Title is direct child */
+    .card>h3 {
+        grid-row: 1;
+        grid-column: 2;
+        margin: 0 !important;
+        padding: 0 !important;
+        align-self: center;
+    }
+
+    /* About/Services: Paragraph is direct child - Full Width below */
+    .card>p {
+        grid-row: 2;
+        grid-column: 1 / -1;
+        margin-top: 15px !important;
+    }
+
+    /* PROTECTION: Vision Card Inner Div must span full width */
+    .card>div {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+    }
+
+    /* TARGET: Vision/Mission inner Flex Container */
+    .card>div[style*="display: flex"],
+    .card>div[style*="display:flex"],
+    .card>div[style*="align-items: start"] {
+        display: grid !important;
+        grid-template-columns: min-content 1fr;
+        grid-template-rows: min-content auto;
+        column-gap: 8px;
+        /* Reduced to 8px */
+        align-items: center !important;
+        gap: 0 !important;
+        column-gap: 8px !important;
+        /* Reduced to 8px */
+    }
+
+    /* Icon: Grid 1,1 */
+    .card>div[style*="display: flex"]>i,
+    .card>div[style*="display:flex"]>i,
+    .card>div[style*="align-items: start"]>i {
+        grid-row: 1;
+        grid-column: 1;
+        font-size: 1.5rem !important;
+        margin: 0 !important;
+        width: auto !important;
+        /* Allow natural width */
+        text-align: right;
+        /* Right align to be closest to text */
+        margin-top: -2px !important;
+        color: var(--secondary-color) !important;
+    }
+
+    /* Text Block Container: Needs to be split visually */
+    .card>div[style*="display: flex"]>div,
+    .card>div[style*="display:flex"]>div,
+    .card>div[style*="align-items: start"]>div {
+        grid-row: 1;
+        grid-column: 2;
+        display: contents;
+    }
+
+    /* Title inside the unwrapped div */
+    .card>div[style*="display: flex"]>div>h2,
+    .card>div[style*="display:flex"]>div>h2,
+    .card>div[style*="align-items: start"]>div>h2 {
+        grid-row: 1;
+        grid-column: 2;
+        margin: 0 !important;
+        font-size: 1.3rem !important;
+        /* Slightly smaller for elegance */
+        align-self: center;
+        line-height: 1.2 !important;
+    }
+
+    /* Paragraph/List inside the unwrapped div */
+    .card>div[style*="display: flex"]>div>p,
+    .card>div[style*="display:flex"]>div>p,
+    .card>div[style*="align-items: start"]>div>p,
+    .card>div[style*="display: flex"]>div>ul,
+    .card>div[style*="display:flex"]>div>ul,
+    .card>div[style*="align-items: start"]>div>ul {
+        grid-row: 2;
+        grid-column: 1 / -1;
+        margin-top: 20px !important;
+        width: 100% !important;
+    }
+
+    /* === MISSION SECTION SPECIFIC MOBILE OVERRIDES === */
+    .mission-card>div {
+        /* Ensure the grid applies even if inline styles differ slightly */
+        display: grid !important;
+        grid-template-columns: min-content 1fr;
+        grid-template-rows: min-content auto;
+        column-gap: 8px !important;
+        align-items: center !important;
+    }
+
+    .mission-card i,
+    .mission-card .fa-bullseye {
+        /* Mobile Specific Size */
+        font-size: 1.3rem !important;
+        /* Visual balance tweak (was 1.5rem) */
+        width: auto !important;
+        margin-top: -2px !important;
+    }
+}
+
+/* =========================================
+   FIX: Mission Section Desktop/Laptop Styles
+   ========================================= */
+@media (min-width: 769px) {
+    .mission-card i {
+        font-size: 2rem;
+        margin-top: 5px;
+        /* Top align matching Vision */
+        align-self: flex-start;
+        /* Ensure top alignment next to title */
+    }
+
+    .mission-card>div {
+        align-items: flex-start !important;
+        /* Prevent centering relative to the whole list */
+    }
+
+    .vision-card i {
+        font-size: 2.2rem;
+        /* Reduced from 3rem */
+        margin-top: 5px;
+        /* Top align */
+        align-self: flex-start;
+    }
+}
+
+/* =========================================
+   FIX: Activities Section Mobile Layout
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. Card Container: Grid Layout */
+    .activities-section .card {
+        display: grid !important;
+        grid-template-columns: min-content 1fr !important;
+        grid-template-rows: min-content min-content auto !important;
+        gap: 10px !important;
+        padding: 20px !important;
+        /* Ensure sufficient padding */
+        text-align: left !important;
+        height: auto !important;
+        align-items: center !important;
+    }
+
+    /* 2. Unwrap the Header Div (contains Icon + Duration) */
+    .activities-section .card>div[style*="display: flex"],
+    .activities-section .card>div {
+        display: contents !important;
+    }
+
+    /* 3. Icon: Row 1, Col 1 */
+    .activities-section .card>div>i {
+        grid-row: 1;
+        grid-column: 1;
+        font-size: 2rem !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding-right: 10px !important;
+        /* Gap between icon and title */
+        align-self: center !important;
+    }
+
+    /* 4. Title: Row 1, Col 2 (Beside Icon) */
+    .activities-section .card>h3 {
+        grid-row: 1;
+        grid-column: 2;
+        margin: 0 !important;
+        font-size: 1.25rem !important;
+        line-height: 1.3 !important;
+        align-self: center !important;
+    }
+
+    /* 5. Duration Badge: Row 2, Full Width */
+    .activities-section .card>div>span {
+        grid-row: 2;
+        grid-column: 1 / -1;
+        display: inline-block !important;
+        margin-top: 5px !important;
+        justify-self: start !important;
+    }
+
+    /* 6. List: Row 3, Full Width */
+    .activities-section .card>ul {
+        grid-row: 3;
+        grid-column: 1 / -1;
+        width: 100% !important;
+        margin-top: 10px !important;
+    }
+}
+
+/* =========================================
+   FIX: Footer Mobile Layout
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. Stack Columns Vertical */
+    .footer-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+        padding: 0 20px !important;
+        /* Increase side padding for better frame */
+    }
+
+    /* 2. Title Section (First Col) - Centered Anchor */
+    .footer-col:first-child {
+        text-align: center !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        padding-bottom: 25px !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* 3. Quick Links (Middle Col) - Structured Left Align */
+    .footer-col:nth-child(2) {
+        text-align: left !important;
+        width: 100% !important;
+        padding-top: 20px !important;
+        /* Spacing for top border */
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Match Follow Us separator */
+        border-left: none !important;
+        /* Remove side spine */
+        padding-left: 0 !important;
+        margin-bottom: 10px !important;
+    }
+
+    .footer-col:nth-child(2) h3 {
+        border-bottom: 2px solid var(--secondary-color);
+        /* Keep the small under-title accent */
+        display: inline-block !important;
+        /* Only underline the text */
+        margin-bottom: 15px !important;
+        font-size: 1.3rem !important;
+    }
+
+    /* 3b. Links Grid: 2 Columns, Column Flow */
+    .footer-links {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-auto-flow: column !important;
+        /* Fill first column then second */
+        grid-template-rows: repeat(4, min-content) !important;
+        /* 4 items per column */
+        gap: 10px 20px !important;
+        /* Row Gap 10px, Col Gap 20px */
+    }
+
+    /* 4. Follow Us (Last Col) - Distinct Centered Block */
+    .footer-col:last-child {
+        text-align: center !important;
+        margin-top: 20px !important;
+        padding-top: 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Separator line */
+    }
+
+    .social-icons {
+        justify-content: center !important;
+        gap: 25px !important;
+        /* Wider spacing for touch targets */
+        margin-top: 15px !important;
+    }
+
+
+}
+
+/* =========================================
+   GLOBAL FIX: About Lab Cards Spacing
+   Applied globally to ensure consistency
+   ========================================= */
+.about-card {
+    padding-left: 30px !important;
+    /* Base override */
+    border-left: 5px solid var(--secondary-color) !important;
+    text-align: left !important;
+}
+
+/* Mobile Specific Increase */
+@media (max-width: 768px) {
+    .about-card {
+        padding-left: 50px !important;
+        /* Extra breathing room for mobile */
     }
 }
