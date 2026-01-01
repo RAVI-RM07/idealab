@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-    }
+    }  
 
     // Close mobile menu when a link is clicked
     document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
